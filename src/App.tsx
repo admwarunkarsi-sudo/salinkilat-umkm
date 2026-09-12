@@ -9,6 +9,7 @@ import { HistoryDrawer } from './components/HistoryDrawer';
 import { Sparkles, ShieldCheck, Zap, HeartHandshake, AlertCircle, RotateCcw, X } from 'lucide-react';
 import { generateSmartFallback, safeParseGeminiJSON } from './lib/geminiCopyService';
 import { formatErrorMessage } from './lib/formatError';
+import { executeCopyGeneration } from './lib/clientGeminiService';
 
 const STORAGE_KEY = 'salinkilat_umkm_history_v1';
 
@@ -79,7 +80,7 @@ export default function App() {
     setErrorMessage(null);
   };
 
-  // Generate copywriting request with timeout and error resilience
+  // Generate copywriting request with direct client-side Gemini execution and multi-tier resilience
   const handleGenerate = async (request: CopyRequest) => {
     if (isLoading) return;
 
@@ -91,59 +92,11 @@ export default function App() {
     const timeoutId = setTimeout(() => controller.abort(), 25000);
 
     try {
-      const response = await fetch('/api/generate-copy', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify(request),
-        signal: controller.signal,
-      });
-
+      // Direct client-side invocation via process.env.GEMINI_API_KEY / import.meta.env.VITE_GEMINI_API_KEY,
+      // with automatic secondary fallback to serverless API or intelligent local engine
+      const result = await executeCopyGeneration(request, controller.signal);
       clearTimeout(timeoutId);
 
-      const rawText = await response.text();
-      let data: any = null;
-
-      // 1. Try standard JSON parse
-      try {
-        data = JSON.parse(rawText);
-      } catch {
-        // 2. Try resilient Gemini JSON extraction
-        data = safeParseGeminiJSON(rawText);
-      }
-
-      // 3. Check for HTML or unparseable response (e.g. Vercel SPA rewrite or gateway page)
-      if (!data) {
-        console.warn('Non-JSON response received from server, activating intelligent local fallback engine:', rawText.slice(0, 100));
-        // Provide seamless fallback rather than halting the user with 'Format respons tidak sesuai'
-        data = generateSmartFallback(
-          request.productName,
-          request.productDescription,
-          request.tone,
-          request.platform
-        );
-      }
-
-      if (!response.ok) {
-        const errorText = formatErrorMessage(
-          data,
-          `Gagal menghubungi server generator (kode status ${response.status}).`
-        );
-        throw new Error(errorText);
-      }
-
-      if (!data || typeof data.caption !== 'string' || !data.caption.trim()) {
-        data = generateSmartFallback(
-          request.productName,
-          request.productDescription,
-          request.tone,
-          request.platform
-        );
-      }
-
-      const result = data as CopyResult;
       setCurrentResult(result);
       saveToHistory(result);
 
@@ -157,7 +110,7 @@ export default function App() {
 
       const safeMessage = formatErrorMessage(
         err,
-        'Terjadi kendala jaringan saat membuat caption. Silakan klik tombol "Coba Lagi".'
+        'Terjadi kendala saat membuat caption. Silakan klik tombol "Coba Lagi".'
       );
       setErrorMessage(safeMessage);
     } finally {
