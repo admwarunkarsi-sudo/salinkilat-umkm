@@ -1,0 +1,6 @@
+{
+  "name": "SalinKilat UMKM",
+  "description": "Prototype generator copywriting dan caption otomatis untuk produk UMKM Indonesia berbasis AI, dirancang mobile-first untuk Instagram, Marketplace, dan TikTok.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
