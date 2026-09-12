@@ -8,6 +8,7 @@ import { ResultCard } from './components/ResultCard';
 import { HistoryDrawer } from './components/HistoryDrawer';
 import { Sparkles, ShieldCheck, Zap, HeartHandshake, AlertCircle, RotateCcw, X } from 'lucide-react';
 import { generateSmartFallback, safeParseGeminiJSON } from './lib/geminiCopyService';
+import { formatErrorMessage } from './lib/formatError';
 
 const STORAGE_KEY = 'salinkilat_umkm_history_v1';
 
@@ -125,8 +126,12 @@ export default function App() {
         );
       }
 
-      if (!response.ok && data?.error) {
-        throw new Error(data.error);
+      if (!response.ok) {
+        const errorText = formatErrorMessage(
+          data,
+          `Gagal menghubungi server generator (kode status ${response.status}).`
+        );
+        throw new Error(errorText);
       }
 
       if (!data || typeof data.caption !== 'string' || !data.caption.trim()) {
@@ -146,17 +151,15 @@ export default function App() {
       setTimeout(() => {
         resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 150);
-    } catch (err: any) {
+    } catch (err: unknown) {
       clearTimeout(timeoutId);
       console.error('Copy generation error:', err);
 
-      if (err.name === 'AbortError') {
-        setErrorMessage('Permintaan melebihi batas waktu (timeout). Silakan periksa koneksi internet Anda dan klik "Coba Lagi".');
-      } else if (err.message && typeof err.message === 'string') {
-        setErrorMessage(err.message);
-      } else {
-        setErrorMessage('Terjadi kendala jaringan saat membuat caption. Silakan klik tombol "Coba Lagi".');
-      }
+      const safeMessage = formatErrorMessage(
+        err,
+        'Terjadi kendala jaringan saat membuat caption. Silakan klik tombol "Coba Lagi".'
+      );
+      setErrorMessage(safeMessage);
     } finally {
       setIsLoading(false);
     }
@@ -243,7 +246,7 @@ export default function App() {
               <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
               <div className="space-y-0.5">
                 <p className="font-semibold text-rose-950">Gagal Memproses Permintaan</p>
-                <p className="text-rose-700 leading-relaxed">{errorMessage}</p>
+                <p className="text-rose-700 leading-relaxed">{formatErrorMessage(errorMessage)}</p>
               </div>
             </div>
             <div className="flex items-center gap-2 self-end sm:self-center shrink-0">

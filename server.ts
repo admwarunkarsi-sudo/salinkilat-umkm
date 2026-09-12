@@ -62,6 +62,7 @@ app.post('/api/generate-copy', async (req, res) => {
     if (!req.body || typeof req.body !== 'object') {
       return res.status(400).json({
         error: 'Data permintaan tidak valid atau format JSON salah.',
+        message: 'Data permintaan tidak valid atau format JSON salah.',
       });
     }
 
@@ -72,12 +73,14 @@ app.post('/api/generate-copy', async (req, res) => {
     if (!rawName) {
       return res.status(400).json({
         error: 'Nama produk wajib diisi.',
+        message: 'Nama produk wajib diisi.',
       });
     }
 
     if (!rawDesc) {
       return res.status(400).json({
         error: 'Deskripsi atau keunggulan produk wajib diisi.',
+        message: 'Deskripsi atau keunggulan produk wajib diisi.',
       });
     }
 

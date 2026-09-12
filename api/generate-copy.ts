@@ -34,12 +34,14 @@ export default async function handler(req: any, res: any) {
     if (!rawName) {
       return res.status(400).json({
         error: 'Nama produk wajib diisi.',
+        message: 'Nama produk wajib diisi.',
       });
     }
 
     if (!rawDesc) {
       return res.status(400).json({
         error: 'Deskripsi atau keunggulan produk wajib diisi.',
+        message: 'Deskripsi atau keunggulan produk wajib diisi.',
       });
     }
 

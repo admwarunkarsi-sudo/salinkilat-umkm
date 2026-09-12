@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ToneType, PlatformType, CopyRequest } from '../types';
 import { TONE_OPTIONS, PLATFORM_OPTIONS } from '../data/presets';
+import { formatErrorMessage } from '../lib/formatError';
 import {
   Sparkles,
   Flame,
@@ -290,7 +291,7 @@ export const CopywriterForm: React.FC<CopywriterFormProps> = ({
       {validationError && (
         <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl flex items-center gap-2 text-xs text-rose-700">
           <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
-          <span>{validationError}</span>
+          <span>{formatErrorMessage(validationError)}</span>
         </div>
       )}
 
