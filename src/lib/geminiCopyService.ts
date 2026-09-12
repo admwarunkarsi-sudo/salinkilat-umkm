@@ -160,6 +160,19 @@ export function withTimeout<T>(promise: Promise<T>, ms: number, errorMessage = '
   ]);
 }
 
+/**
+ * Safely sanitizes error messages by masking API keys and sensitive tokens
+ * before printing to server logs or returning to clients.
+ */
+export function sanitizeErrorMessage(error: any): string {
+  if (!error) return 'Terjadi kendala sistem.';
+  const raw = typeof error === 'string' ? error : error.message || String(error);
+  return raw
+    .replace(/AIza[0-9A-Za-z-_]{35}/g, '[REDACTED_API_KEY]')
+    .replace(/key=[a-zA-Z0-9_-]+/gi, 'key=[REDACTED]')
+    .replace(/bearer\s+[a-zA-Z0-9_\-\.]+/gi, 'Bearer [REDACTED]');
+}
+
 // Smart local fallback generator for 100% reliability
 export function generateSmartFallback(
   productName: string,
@@ -464,7 +477,7 @@ KEMBALIKAN OUTPUT DALAM BENTUK JSON VALID BERIKUT:
       }
     } catch (err: any) {
       lastError = err;
-      console.warn(`Model ${modelName} failed or timed out:`, err?.message || err);
+      console.warn(`Model ${modelName} failed or timed out:`, sanitizeErrorMessage(err));
     }
   }
 
@@ -495,7 +508,7 @@ KEMBALIKAN OUTPUT DALAM BENTUK JSON VALID BERIKUT:
   }
 
   if (lastError) {
-    console.error('All candidate Gemini models failed, proceeding to fallback generator:', lastError?.message || lastError);
+    console.error('All candidate Gemini models failed, proceeding to fallback generator:', sanitizeErrorMessage(lastError));
   }
 
   return null;
