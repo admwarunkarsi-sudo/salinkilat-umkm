@@ -97,10 +97,19 @@ app.post('/api/generate-copy', async (req, res) => {
     const productDescription = rawDesc.slice(0, 2000);
     const additionalNotes = rawNotes ? rawNotes.slice(0, 500) : undefined;
 
-    const ALLOWED_TONES: ToneOfVoice[] = ['hard-selling', 'soft-selling', 'humor-genz', 'emak-emak'];
-    const ALLOWED_PLATFORMS: Platform[] = ['instagram', 'marketplace', 'tiktok'];
+    const ALLOWED_TONES: ToneOfVoice[] = [
+      'emak-emak',
+      'kuliner-genz',
+      'tradisional-legendaris',
+      'lapar-mata',
+      'cerita-rasa',
+      'hard-selling',
+      'soft-selling',
+      'humor-genz',
+    ];
+    const ALLOWED_PLATFORMS: Platform[] = ['instagram', 'tiktok', 'whatsapp', 'marketplace'];
 
-    const tone: ToneOfVoice = ALLOWED_TONES.includes(req.body.tone) ? req.body.tone : 'hard-selling';
+    const tone: ToneOfVoice = ALLOWED_TONES.includes(req.body.tone) ? req.body.tone : 'emak-emak';
     const platform: Platform = ALLOWED_PLATFORMS.includes(req.body.platform) ? req.body.platform : 'instagram';
 
     // 1. Attempt generation with Gemini AI if client is configured

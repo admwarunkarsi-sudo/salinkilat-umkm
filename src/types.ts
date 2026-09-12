@@ -1,7 +1,17 @@
-export type ToneType = 'hard-selling' | 'soft-selling' | 'humor-genz' | 'emak-emak';
+export type ToneType =
+  | 'emak-emak'
+  | 'kuliner-genz'
+  | 'tradisional-legendaris'
+  | 'lapar-mata'
+  | 'cerita-rasa'
+  // Backwards compatibility aliases
+  | 'hard-selling'
+  | 'soft-selling'
+  | 'humor-genz';
+
 export type ToneOfVoice = ToneType;
 
-export type PlatformType = 'instagram' | 'marketplace' | 'tiktok';
+export type PlatformType = 'instagram' | 'tiktok' | 'whatsapp' | 'marketplace';
 export type Platform = PlatformType;
 
 export interface CopyRequest {

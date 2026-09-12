@@ -139,10 +139,19 @@ export default async function handler(req: any, res: any) {
     const productDescription = rawDesc.slice(0, 2000);
     const additionalNotes = rawNotes ? rawNotes.slice(0, 500) : undefined;
 
-    const ALLOWED_TONES: ToneOfVoice[] = ['hard-selling', 'soft-selling', 'humor-genz', 'emak-emak'];
-    const ALLOWED_PLATFORMS: Platform[] = ['instagram', 'marketplace', 'tiktok'];
+    const ALLOWED_TONES: ToneOfVoice[] = [
+      'emak-emak',
+      'kuliner-genz',
+      'tradisional-legendaris',
+      'lapar-mata',
+      'cerita-rasa',
+      'hard-selling',
+      'soft-selling',
+      'humor-genz',
+    ];
+    const ALLOWED_PLATFORMS: Platform[] = ['instagram', 'tiktok', 'whatsapp', 'marketplace'];
 
-    const tone: ToneOfVoice = ALLOWED_TONES.includes(body?.tone) ? body.tone : 'hard-selling';
+    const tone: ToneOfVoice = ALLOWED_TONES.includes(body?.tone) ? body.tone : 'emak-emak';
     const platform: Platform = ALLOWED_PLATFORMS.includes(body?.platform) ? body.platform : 'instagram';
 
     // 3. Attempt generation via Gemini AI if API key is configured

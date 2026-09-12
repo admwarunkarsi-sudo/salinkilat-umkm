@@ -1,6 +1,6 @@
 import React from 'react';
 import { CopyResult } from '../types';
-import { Copy, Check, Trash2, X, Clock, ShoppingBag, Instagram, Video } from 'lucide-react';
+import { Copy, Check, X, Clock, ShoppingBag, Instagram, Video, MessageCircle, UtensilsCrossed } from 'lucide-react';
 
 interface HistoryDrawerProps {
   isOpen: boolean;
@@ -40,8 +40,10 @@ export const HistoryDrawer: React.FC<HistoryDrawerProps> = ({
         return <ShoppingBag className="w-3.5 h-3.5 text-orange-600" />;
       case 'tiktok':
         return <Video className="w-3.5 h-3.5 text-sky-600" />;
+      case 'whatsapp':
+        return <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />;
       default:
-        return null;
+        return <UtensilsCrossed className="w-3.5 h-3.5 text-orange-600" />;
     }
   };
 
@@ -52,11 +54,11 @@ export const HistoryDrawer: React.FC<HistoryDrawerProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="p-4 border-b border-slate-200 flex items-center justify-between">
+        <div className="p-4 border-b border-amber-200/70 flex items-center justify-between bg-amber-50/40">
           <div className="flex items-center gap-2">
-            <h2 className="text-base font-bold text-slate-900">Riwayat Caption UMKM</h2>
-            <span className="text-xs bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full font-semibold">
-              {history.length}
+            <h2 className="text-base font-bold text-slate-900">Riwayat Copywriting Kuliner</h2>
+            <span className="text-xs bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full font-semibold border border-amber-200/60">
+              {history.length} Menu
             </span>
           </div>
           <div className="flex items-center gap-2">
@@ -84,9 +86,9 @@ export const HistoryDrawer: React.FC<HistoryDrawerProps> = ({
           {history.length === 0 ? (
             <div className="py-12 text-center text-slate-400">
               <Clock className="w-8 h-8 mx-auto mb-2 opacity-40" />
-              <p className="text-sm font-medium text-slate-600">Belum ada riwayat caption</p>
+              <p className="text-sm font-medium text-slate-600">Belum ada riwayat caption makanan</p>
               <p className="text-xs text-slate-400 mt-1">
-                Hasil copywriting yang Anda generate akan otomatis tersimpan di sini.
+                Hasil copywriting makanan yang Anda racik akan otomatis tersimpan di sini.
               </p>
             </div>
           ) : (
@@ -99,7 +101,7 @@ export const HistoryDrawer: React.FC<HistoryDrawerProps> = ({
                     onSelectResult(item);
                     onClose();
                   }}
-                  className="p-3.5 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/20 cursor-pointer transition-all text-left group"
+                  className="p-3.5 rounded-xl border border-slate-200 hover:border-amber-500 hover:bg-amber-50/20 cursor-pointer transition-all text-left group"
                 >
                   <div className="flex items-center justify-between mb-1.5">
                     <div className="flex items-center gap-1.5">
@@ -118,13 +120,13 @@ export const HistoryDrawer: React.FC<HistoryDrawerProps> = ({
                   </p>
 
                   <div className="flex items-center justify-between pt-1 border-t border-slate-100">
-                    <span className="text-[10px] font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">
+                    <span className="text-[10px] font-semibold text-orange-900 bg-orange-50 px-2 py-0.5 rounded border border-orange-200/50">
                       Formula {item.formula}
                     </span>
                     <button
                       type="button"
                       onClick={(e) => handleCopy(e, item)}
-                      className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 hover:text-emerald-800 px-2 py-0.5 rounded hover:bg-emerald-100/60"
+                      className="inline-flex items-center gap-1 text-[11px] font-semibold text-orange-700 hover:text-orange-800 px-2 py-0.5 rounded hover:bg-orange-100/60"
                     >
                       {isCopied ? (
                         <>

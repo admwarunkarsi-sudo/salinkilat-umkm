@@ -6,18 +6,17 @@ import { PresetSelector } from './components/PresetSelector';
 import { CopywriterForm } from './components/CopywriterForm';
 import { ResultCard } from './components/ResultCard';
 import { HistoryDrawer } from './components/HistoryDrawer';
-import { Sparkles, ShieldCheck, Zap, HeartHandshake, AlertCircle, RotateCcw, X } from 'lucide-react';
-import { generateSmartFallback, safeParseGeminiJSON } from './lib/geminiCopyService';
+import { UtensilsCrossed, ShieldCheck, Flame, AlertCircle, RotateCcw, X, HeartHandshake, Sparkles } from 'lucide-react';
 import { formatErrorMessage } from './lib/formatError';
 import { executeCopyGeneration } from './lib/clientGeminiService';
 
-const STORAGE_KEY = 'salinkilat_umkm_history_v1';
+const STORAGE_KEY = 'salinkilat_kuliner_history_v2';
 
 export default function App() {
   // Form states
   const [productName, setProductName] = useState('');
   const [productDescription, setProductDescription] = useState('');
-  const [tone, setTone] = useState<ToneType>('hard-selling');
+  const [tone, setTone] = useState<ToneType>('emak-emak');
   const [platform, setPlatform] = useState<PlatformType>('instagram');
   const [additionalNotes, setAdditionalNotes] = useState('');
   const [selectedPresetId, setSelectedPresetId] = useState<string | undefined>();
@@ -35,7 +34,7 @@ export default function App() {
   // Load history from localStorage on mount safely
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
+      const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('salinkilat_umkm_history_v1');
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) {
@@ -51,7 +50,7 @@ export default function App() {
   const saveToHistory = (newResult: CopyResult) => {
     if (!newResult || !newResult.caption) return;
     setHistory((prev) => {
-      const updated = [newResult, ...prev.filter((item) => item.id !== newResult.id)].slice(0, 20);
+      const updated = [newResult, ...prev.filter((item) => item.id !== newResult.id)].slice(0, 25);
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
       } catch (e) {
@@ -65,6 +64,7 @@ export default function App() {
     setHistory([]);
     try {
       localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem('salinkilat_umkm_history_v1');
     } catch (e) {
       console.warn(e);
     }
@@ -93,24 +93,23 @@ export default function App() {
 
     try {
       // Direct client-side invocation via process.env.GEMINI_API_KEY / import.meta.env.VITE_GEMINI_API_KEY,
-      // with automatic secondary fallback to serverless API or intelligent local engine
+      // with automatic secondary fallback to serverless API or intelligent culinary engine
       const result = await executeCopyGeneration(request, controller.signal);
       clearTimeout(timeoutId);
 
       setCurrentResult(result);
       saveToHistory(result);
 
-      // Smooth scroll to result card on mobile and desktop
+      // Smooth scroll to result card on mobile screens
       setTimeout(() => {
         resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 150);
-    } catch (err: unknown) {
+    } catch (err: any) {
       clearTimeout(timeoutId);
-      console.error('Copy generation error:', err);
 
       const safeMessage = formatErrorMessage(
         err,
-        'Terjadi kendala saat membuat caption. Silakan klik tombol "Coba Lagi".'
+        'Terjadi kendala saat meracik copywriting makanan. Silakan klik tombol "Coba Lagi".'
       );
       setErrorMessage(safeMessage);
     } finally {
@@ -138,7 +137,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans selection:bg-emerald-200 selection:text-emerald-900">
+    <div className="min-h-screen bg-amber-50/25 flex flex-col font-sans selection:bg-amber-200 selection:text-amber-950">
       {/* App Header */}
       <Header
         historyCount={history.length}
@@ -147,21 +146,21 @@ export default function App() {
 
       {/* Main Container */}
       <main className="flex-1 max-w-2xl w-full mx-auto px-4 py-5 space-y-5">
-        {/* Intro Micro-Banner */}
-        <div className="bg-gradient-to-br from-emerald-700 via-emerald-800 to-teal-900 rounded-2xl p-4 sm:p-5 text-white shadow-md relative overflow-hidden">
+        {/* Intro Micro-Banner (Culinary Warm Theme) */}
+        <div className="bg-gradient-to-br from-amber-700 via-orange-700 to-red-800 rounded-2xl p-4 sm:p-5 text-white shadow-md relative overflow-hidden">
           <div className="relative z-10">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 text-emerald-200 text-xs font-semibold mb-2">
-              <Zap className="w-3.5 h-3.5 text-amber-300" />
-              <span>Khusus Pelaku Usaha & UMKM Indonesia</span>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 text-amber-200 text-xs font-semibold mb-2">
+              <Flame className="w-3.5 h-3.5 text-amber-300" />
+              <span>Khusus UMKM Kuliner & Bisnis Makanan Indonesia 🍜</span>
             </div>
             <h2 className="text-lg sm:text-xl font-bold tracking-tight text-white leading-snug">
-              Bikin Teks Jualan Persuasif yang Siap Meningkatkan Orderan Anda
+              Racik Copywriting Makanan yang Bikin Ngiler & Melipatgandakan Pesanan
             </h2>
-            <p className="text-xs sm:text-sm text-emerald-100/90 mt-1 leading-relaxed">
-              Tinggal isi nama dan keunggulan produk. AI Senior Copywriter akan meracik caption Instagram, deskripsi Marketplace, atau skrip TikTok viral Anda.
+            <p className="text-xs sm:text-sm text-amber-100/90 mt-1 leading-relaxed">
+              Tinggal isi nama menu dan sensasi rasanya. AI Food Copywriter akan menyusun deskripsi bumbu gurih, aroma rempah, dan kelaparan visual untuk Instagram, TikTok, WhatsApp, hingga Food Delivery.
             </p>
           </div>
-          <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute -right-6 -bottom-6 w-32 h-32 bg-amber-400/20 rounded-full blur-2xl pointer-events-none" />
         </div>
 
         {/* 1-Tap Example Presets for Fast Testing */}
@@ -231,12 +230,12 @@ export default function App() {
           {currentResult && (
             <div className="space-y-2">
               <div className="flex items-center justify-between px-1">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
-                  <Sparkles className="w-4 h-4 text-emerald-600" />
-                  Hasil Copywriting Siap Pakai:
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
+                  <UtensilsCrossed className="w-4 h-4 text-orange-600" />
+                  Hasil Copywriting Kuliner Siap Pakai:
                 </h3>
-                <span className="text-[11px] text-slate-400">
-                  Formula Teruji • Bahasa Indonesia Natural
+                <span className="text-[11px] text-orange-800 font-medium bg-orange-50 px-2 py-0.5 rounded-md border border-orange-200/50">
+                  Sensori Rasa • Bahasa Indonesia Natural
                 </span>
               </div>
 
@@ -249,48 +248,48 @@ export default function App() {
           )}
         </div>
 
-        {/* Mini Guide / Keunggulan Formula untuk UMKM */}
-        <div className="mt-8 p-4 bg-white rounded-2xl border border-slate-200/80 shadow-xs">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 flex items-center gap-1.5">
-            <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            Mengapa Copywriting SalinKilat Efektif Menjual?
+        {/* Keunggulan Khusus Kuliner untuk UMKM */}
+        <div className="mt-8 p-4 bg-white rounded-2xl border border-amber-200/80 shadow-xs">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 mb-2.5 flex items-center gap-1.5">
+            <ShieldCheck className="w-4 h-4 text-orange-600" />
+            Mengapa Copywriting Khusus Kuliner Ini Lebih Efektif Menjual?
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-slate-600">
-            <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+            <div className="p-2.5 rounded-xl bg-amber-50/50 border border-amber-100">
               <span className="font-bold text-slate-900 block mb-0.5">
-                🎯 Stop-Scrolling Hook
+                🌶️ Kosakata Sensori Rasa
               </span>
-              Kalimat pertama dirancang khusus agar jempol audiens langsung berhenti scroll di detik pertama.
+              Menggunakan kata-kata pemicu nafsu makan: gurih nendang, empuk lumer, pedas nampol, dan aroma rempah asli nusantara.
             </div>
-            <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+            <div className="p-2.5 rounded-xl bg-amber-50/50 border border-amber-100">
               <span className="font-bold text-slate-900 block mb-0.5">
-                💡 Formula AIDA & PAS
+                🤤 Efek Kelaparan Visual
               </span>
-              Bukan sekadar kata-kata manis, tapi terstruktur dari Attention, Interest, Desire, hingga Call to Action tegas.
+              Deskripsi hook yang memancing air liur dan membuat pembaca membayangkan nikmatnya suapan nasi hangat bersama menu Anda.
             </div>
-            <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+            <div className="p-2.5 rounded-xl bg-amber-50/50 border border-amber-100">
               <span className="font-bold text-slate-900 block mb-0.5">
-                🇮🇩 Bahasa Indonesia Lokal
+                👥 Karakter Penjual Relevan
               </span>
-              Menggunakan gaya bahasa pasar Indonesia yang luwes, akrab, dan relevan dengan segmen target UMKM.
+              Pilihan tone Emak-Emak Friendly untuk lauk keluarga, Kuliner Kekinian/Gen-Z untuk tren viral, hingga Pedagang Tradisional beresep leluhur.
             </div>
-            <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+            <div className="p-2.5 rounded-xl bg-amber-50/50 border border-amber-100">
               <span className="font-bold text-slate-900 block mb-0.5">
-                ⚡ Tombol Salin Instan
+                ⚡ Siap Forward ke WhatsApp
               </span>
-              1 klik langsung tersalin ke clipboard tanpa perlu blok teks secara manual di layar handphone.
+              Format pesan rapi yang siap langsung dikirim ke broadcast WhatsApp pelanggan, status harian, maupun caption media sosial.
             </div>
           </div>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-200 py-5 px-4 text-center text-xs text-slate-400 mt-8">
-        <p className="font-medium text-slate-500">
-          SalinKilat UMKM • AI Copywriting Assistant untuk Pengusaha Lokal
+      <footer className="border-t border-amber-200/70 py-5 px-4 text-center text-xs text-slate-400 mt-8 bg-white/50">
+        <p className="font-medium text-slate-600">
+          SalinKilat UMKM • Generator Copywriting Spesialis Kuliner & Makanan Indonesia
         </p>
         <p className="text-[11px] text-slate-400 mt-1">
-          Dibuat khusus untuk kenyamanan mobile browsing pelaku UMKM Indonesia.
+          Didedikasikan untuk memajukan usaha kuliner, warung makan, frozen food, dan jajanan UMKM nusantara.
         </p>
       </footer>
 

@@ -2,107 +2,131 @@ import { PresetProduct } from '../types';
 
 export const UMKM_PRESETS: PresetProduct[] = [
   {
-    id: 'snack-balado',
-    name: 'Keripik Singkong Balado Daun Jeruk',
-    category: 'Kuliner & Camilan',
-    description: 'Bahan singkong pilihan renyah tipis, bumbu balado asli cabai merah segar dengan taburan daun jeruk wangi, tanpa pengawet kimia, kemasan ziplock pouch 200gr, sertifikasi Halal & P-IRT.',
-    tone: 'hard-selling',
+    id: 'sambal-cumi-mercon',
+    name: 'Sambal Bawang Cumi Asin Mercon',
+    category: 'Lauk & Sambal Rumahan',
+    description: 'Potongan cumi asin empuk melimpah tidak alot, dimasak lambat dengan cabai rawit merah segar dan bawang merah Brebes gurih wangi. Tanpa pengawet buatan, minyak kemerahan medok wangi semerbak, cocok jadi teman nasi panas kepul-kepul.',
+    tone: 'lapar-mata',
     platform: 'instagram',
-    badge: '🔥 Camilan Gurih'
+    badge: '🌶️ Pedas Nampol'
   },
   {
-    id: 'fashion-gamis',
-    name: 'Gamis Rayon Twill Adem Busui Friendly',
-    category: 'Fashion Muslim',
-    description: 'Bahan katun rayon twill premium grade A jatuh & super adem, resleting depan aktif (busui friendly), saku samping kanan, lingkar dada 110cm panjang 138cm, jahitan butik rapi tidak menerawang.',
-    tone: 'emak-emak',
-    platform: 'marketplace',
-    badge: '👗 Busana Muslim'
-  },
-  {
-    id: 'kopi-literan',
-    name: 'Es Kopi Susu Gula Aren 1 Liter',
-    category: 'Minuman Kekinian',
-    description: '100% biji kopi arabika & robusta lokal fresh brew, dipadukan susu creamy pasteurisasi dan sirup gula aren murni organik, botol higienis 1 Liter tahan 5 hari di kulkas, stok penyelamat saat lembur atau kumpul bareng.',
-    tone: 'humor-genz',
+    id: 'dimsum-mentai-bakar',
+    name: 'Dimsum Mentai Mozzarella Torched',
+    category: 'Jajanan & Camilan Kekinian',
+    description: 'Dimsum ayam udang gemuk padat berdaging kenyal, disiram saus mentai gurih creamy sedikit pedas asam, diberi topping keju mozzarella mulur yang dibakar (torched) sampai wangi karamel asap smoky menggoda.',
+    tone: 'kuliner-genz',
     platform: 'tiktok',
-    badge: '☕ Kopi Viral'
+    badge: '🧀 Lumer Smoky'
   },
   {
-    id: 'skincare-serum',
-    name: 'Brightening Serum Beras Organik & Niacinamide',
-    category: 'Skincare Lokal',
-    description: 'Ekstrak beras organik lokal fermentasi + Niacinamide 5%, tekstur ringan mudah meresap tanpa rasa lengket, membantu mencerahkan kulit kusam & samarkan noda bekas jerawat, aman kulit sensitif & BPOM registered.',
-    tone: 'soft-selling',
-    platform: 'instagram',
-    badge: '✨ Perawatan Kulit'
-  },
-  {
-    id: 'kriya-tas',
-    name: 'Tas Anyaman Serat Purun Handmade Etnik',
-    category: 'Kriya & Kerajinan',
-    description: 'Anyaman tangan pengrajin ibu-ibu desa Kalimantan, bahan serat purun alami ramah lingkungan, tali kulit sintetis kuat, muat dompet, HP dan pouch makeup, cocok untuk kondangan, santai, maupun souvenir unik.',
-    tone: 'soft-selling',
+    id: 'rendang-suwir-padang',
+    name: 'Rendang Daging Sapi Suwir Bumbu Hitam',
+    category: 'Kuliner Tradisional Warisan',
+    description: 'Resep turun-temurun Minang asli, daging sapi pilihan disuwir halus dimasak 8 jam dengan santan kelapa tua murni dan 14 rempah pilihan sampai bumbu hitam medok meresap ke serat terdalam. Tahan 3 bulan suhu ruang, praktis tinggal santap.',
+    tone: 'tradisional-legendaris',
     platform: 'marketplace',
-    badge: '🌿 Kerajinan Lokal'
+    badge: '👑 Resep Warisan'
+  },
+  {
+    id: 'kopi-susu-aren',
+    name: 'Es Kopi Susu Creamy Gula Aren Asli 1 Liter',
+    category: 'Minuman Segar & Kopi',
+    description: 'Ekstrak espresso biji kopi arabika Mandheling & robusta Dampit, dipadu susu segar creamy tebal dan sirup gula aren organik asli Lebak beraroma pandan alami. Manisnya pas tidak bikin enek di tenggorokan, mood booster harian.',
+    tone: 'kuliner-genz',
+    platform: 'instagram',
+    badge: '☕ Segar Creamy'
+  },
+  {
+    id: 'ayam-ungkep-bumbu-kuning',
+    name: 'Ayam Ungkep Lengkuas Rempah Frozen (Siap Goreng)',
+    category: 'Frozen Food Praktis Bunda',
+    description: '1 ekor ayam pejantan potong 4, diungkep bumbu kuning rempah lengkuas melimpah sampai bumbu meresap ke tulang. Dilengkapi serundeng lengkuas kriuk gurih dan sambal korek. Praktis buat stok lauk keluarga, tinggal goreng 5 menit.',
+    tone: 'emak-emak',
+    platform: 'whatsapp',
+    badge: '🍗 Stok Bunda'
+  },
+  {
+    id: 'bolu-jadul-keju-gondrong',
+    name: 'Bolu Jadul Keju Gondrong Mentega Wisman',
+    category: 'Kue & Bakery Rumahan',
+    description: 'Kue bolu vanilla klasik super lembut spons, dioles butter cream gurih tidak bikin seret, ditaburi parutan keju cheddar melimpah ruah gondrong. Wangi semerbak mentega khas resep jadul yang ngangenin momen kumpul keluarga.',
+    tone: 'cerita-rasa',
+    platform: 'whatsapp',
+    badge: '🍰 Lembut Harum'
   }
 ];
 
 export const TONE_OPTIONS = [
   {
-    value: 'hard-selling',
-    label: 'Hard-Selling Tegas',
-    tagline: 'To the point, penawaran terbatas, urgensi tinggi',
-    icon: 'Flame',
-    color: 'amber',
-    description: 'Cocok untuk promo diskon, flash sale, stok menipis, atau penutupan pre-order.',
-  },
-  {
-    value: 'soft-selling',
-    label: 'Soft-Selling Storytelling',
-    tagline: 'Menyentuh perasaan, cerita masalah & solusi',
-    icon: 'BookOpen',
-    color: 'emerald',
-    description: 'Membangun kedekatan emosional konsumen dengan cerita keseharian dan kehangatan.',
-  },
-  {
-    value: 'humor-genz',
-    label: 'Humoris / Gen-Z',
-    tagline: 'Santai, gaul, relate dengan bahasa kekinian',
-    icon: 'Smile',
-    color: 'purple',
-    description: 'Bahasa anak muda, ringan, seru, dan cocok untuk produk tren media sosial.',
-  },
-  {
     value: 'emak-emak',
     label: 'Emak-Emak Friendly',
-    tagline: 'Ramah, akrab, solutif & perhitungan hemat keluarga',
+    tagline: 'Akrab, praktis, higienis & solusi lauk hemat keluarga',
     icon: 'HeartHandshake',
     color: 'rose',
-    description: 'Sapaan khas Bunda/Moms, mengedepankan kualitas, kebersihan, dan manfaat praktis untuk keluarga.',
+    description: 'Sapaan khas Bunda/Moms, menonjolkan kepraktisan stok dapur, kebersihan, porsi hemat, dan rasa yang disukai anak maupun suami.',
+  },
+  {
+    value: 'kuliner-genz',
+    label: 'Kuliner Kekinian / Gen-Z',
+    tagline: 'ASMR, visual lumer, pedas nampol & bikin FOMO',
+    icon: 'Sparkles',
+    color: 'purple',
+    description: 'Gaya santai gaul anak muda, fokus pada sensasi kriuk krispi, keju mulur, lelehan saus, dan pemicu rasa penasaran viral.',
+  },
+  {
+    value: 'tradisional-legendaris',
+    label: 'Pedagang Kuliner Tradisional',
+    tagline: 'Otentik, resep leluhur, rempah medok & cita rasa kampung halaman',
+    icon: 'CookingPot',
+    color: 'emerald',
+    description: 'Menonjolkan keaslian resep turun-temurun, racikan rempah asli nusantara, ketelitian proses masak lama, dan kenikmatan rasa yang otentik.',
+  },
+  {
+    value: 'lapar-mata',
+    label: 'Lapar Mata & Promo Kilat',
+    tagline: 'Visual menggoda, porsi barbar, urgensi promo & kalap checkout',
+    icon: 'Flame',
+    color: 'amber',
+    description: 'Fokus memicu rasa lapar seketika melalui deskripsi lelehan kuah dan bumbu, dipadu penawaran terbatas atau diskon borong.',
+  },
+  {
+    value: 'cerita-rasa',
+    label: 'Cerita Rasa & Nostalgia',
+    tagline: 'Hangat, menyentuh hati & memori kehangatan masakan rumah',
+    icon: 'BookOpen',
+    color: 'sky',
+    description: 'Membangun kedekatan emosional lewat cerita aroma dapur, kenangan masa kecil, dan bahan baku lokal segar pilihan.',
   },
 ] as const;
 
 export const PLATFORM_OPTIONS = [
   {
     value: 'instagram',
-    label: 'Instagram Caption',
-    badge: 'IG Feed & Reels',
+    label: 'Instagram Kuliner',
+    badge: 'IG Reels & Feed',
     icon: 'Instagram',
-    focus: 'Hook visual, storytelling, jarak paragraf rapi, hashtag tertarget',
-  },
-  {
-    value: 'marketplace',
-    label: 'Marketplace (Shopee/Tokopedia)',
-    badge: 'Shopee & Tokopedia',
-    icon: 'ShoppingBag',
-    focus: 'Judul SEO ramah pencarian, bullet points fitur & spek, garansi toko',
+    focus: 'Hook visual menggoda di kalimat pertama, deskripsi tekstur & rasa bikin ngiler, jarak paragraf rapi, hashtag kuliner tertarget.',
   },
   {
     value: 'tiktok',
-    label: 'TikTok Script / Live',
-    badge: 'TikTok Video & Live',
+    label: 'TikTok Food & ASMR',
+    badge: 'TikTok ASMR & Mukbang',
     icon: 'Video',
-    focus: 'Hook 0-3 detik, skrip visual/dialog interaktif, ajakan keranjang kuning',
+    focus: 'Hook 0-3 detik suara kriuk/lelehan saus, skrip video bikin ngiler, instruksi audio visual, dan call-to-action keranjang kuning.',
+  },
+  {
+    value: 'whatsapp',
+    label: 'WhatsApp Menu & Status',
+    badge: 'Broadcast & Order WA',
+    icon: 'MessageCircle',
+    focus: 'Format pesan siap forward, menu harian, info PO/ready stock, rincian cara pesan cepat, dan penawaran ramah pelanggan.',
+  },
+  {
+    value: 'marketplace',
+    label: 'Food App & Marketplace',
+    badge: 'ShopeeFood / Gofood / Olshop',
+    icon: 'ShoppingBag',
+    focus: 'Deskripsi menu menggugah selera untuk etalase, rincian porsi/level pedas, ketahanan simpan/vakum, dan jaminan keamanan packing.',
   },
 ] as const;
