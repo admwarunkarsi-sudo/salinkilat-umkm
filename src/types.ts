@@ -1,6 +1,8 @@
 export type ToneType = 'hard-selling' | 'soft-selling' | 'humor-genz' | 'emak-emak';
+export type ToneOfVoice = ToneType;
 
 export type PlatformType = 'instagram' | 'marketplace' | 'tiktok';
+export type Platform = PlatformType;
 
 export interface CopyRequest {
   productName: string;

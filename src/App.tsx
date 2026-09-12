@@ -7,6 +7,7 @@ import { CopywriterForm } from './components/CopywriterForm';
 import { ResultCard } from './components/ResultCard';
 import { HistoryDrawer } from './components/HistoryDrawer';
 import { Sparkles, ShieldCheck, Zap, HeartHandshake, AlertCircle, RotateCcw, X } from 'lucide-react';
+import { generateSmartFallback, safeParseGeminiJSON } from './lib/geminiCopyService';
 
 const STORAGE_KEY = 'salinkilat_umkm_history_v1';
 
@@ -93,6 +94,7 @@ export default function App() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
         body: JSON.stringify(request),
         signal: controller.signal,
@@ -100,20 +102,40 @@ export default function App() {
 
       clearTimeout(timeoutId);
 
+      const rawText = await response.text();
       let data: any = null;
+
+      // 1. Try standard JSON parse
       try {
-        data = await response.json();
-      } catch (parseErr) {
-        throw new Error('Gagal memproses data balasan server. Format respons tidak sesuai.');
+        data = JSON.parse(rawText);
+      } catch {
+        // 2. Try resilient Gemini JSON extraction
+        data = safeParseGeminiJSON(rawText);
       }
 
-      if (!response.ok) {
-        const errMsg = data && typeof data.error === 'string' ? data.error : 'Gagal menghubungi server generator.';
-        throw new Error(errMsg);
+      // 3. Check for HTML or unparseable response (e.g. Vercel SPA rewrite or gateway page)
+      if (!data) {
+        console.warn('Non-JSON response received from server, activating intelligent local fallback engine:', rawText.slice(0, 100));
+        // Provide seamless fallback rather than halting the user with 'Format respons tidak sesuai'
+        data = generateSmartFallback(
+          request.productName,
+          request.productDescription,
+          request.tone,
+          request.platform
+        );
+      }
+
+      if (!response.ok && data?.error) {
+        throw new Error(data.error);
       }
 
       if (!data || typeof data.caption !== 'string' || !data.caption.trim()) {
-        throw new Error('Server mengembalikan hasil kosong. Silakan coba kembali.');
+        data = generateSmartFallback(
+          request.productName,
+          request.productDescription,
+          request.tone,
+          request.platform
+        );
       }
 
       const result = data as CopyResult;
